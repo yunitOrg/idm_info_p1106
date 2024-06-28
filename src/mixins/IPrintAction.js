@@ -355,7 +355,7 @@ export default {
      * @Desc 设置主题
      */
     ThemeListAttrToStyle() {
-      var themeList = this.themeList;
+      let themeList = this.propData.themeList;
       if (!themeList) {
           return
       }
@@ -369,11 +369,11 @@ export default {
             'color': item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : ''
         }
         let timeDateStyle = {
-          'border-bottom-color': item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) + '!important' : ''
+          'border-bottom-color': item.mainColor ? IDM.hex8ToRgbaString(item.mainColor.hex8) : ''
         }
-        IDM.setStyleToPageHead(`.${themeNamePrefix}${item.key} .iprintaction .column-li .column-name`, bulletBgColorObj)
-        IDM.setStyleToPageHead(`.${themeNamePrefix}${item.key} .iprintaction .column-li .column-name`, timeDateStyle)
-        IDM.setStyleToPageHead(`.${themeNamePrefix}${item.key} .iprintaction .print-num`, bulletBgColorObj)
+        IDM.setStyleToPageHead(`.${themeNamePrefix}${item.key} #${(this.moduleObject.id || "module_demo")} .iprintaction .column-li .column-name .themeColor`, bulletBgColorObj)
+        IDM.setStyleToPageHead(`.${themeNamePrefix}${item.key} #${(this.moduleObject.id || "module_demo")} .iprintaction .column-li .column-name`, timeDateStyle)
+        IDM.setStyleToPageHead(`.${themeNamePrefix}${item.key} #${(this.moduleObject.id || "module_demo")} .iprintaction .print-num`, bulletBgColorObj)
         // IDM.setStyleToPageHead(`.${themeNamePrefix}${item.key} .printAction .ant-modal-title`, bulletBgColorObj)
       }
     }

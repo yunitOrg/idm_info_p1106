@@ -43,8 +43,8 @@
       <div class="column-li" v-for="(item, index) in printData.columns" :key="index">
         <div class="column-name textcenter" >
           <!-- <a-icon :type="item.isShow ? 'minus' : 'plus'" /> -->
-          <svg-icon icon-class="shu"></svg-icon>
-          <span v-if="item.isColumnInput">{{ item.columnName }}</span>
+          <svg-icon class="themeColor" icon-class="shu"></svg-icon>
+          <span class="themeColor" v-if="item.isColumnInput">{{ item.columnName }}</span>
           <a-input
             v-else
             ref="columnInput"
@@ -53,7 +53,7 @@
             @click.stop="()=>{}"
             @blur="handleColumnInput(item)"
           />
-          <span v-if="item.articles" style="padding-left: 5px;">({{ item.articles?.length }})</span>
+          <span class="themeColor" v-if="item.articles" style="padding-left: 5px;">({{ item.articles?.length }})</span>
           <!--收缩-->
           <span class="columnnone pd-le20" @click.stop="handleColumnName(item)">
             <img :src="item.isShow?hideimg:showimg" alt="">
