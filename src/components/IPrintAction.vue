@@ -393,6 +393,15 @@ export default {
           })
         }
       })
+      try{
+        let name = 'handleAddLogic';
+        window[name] && window[name].call(this, {
+          _this: this,
+          data: this.printData
+        });
+      } catch(e) {
+        console.log(e,'增加逻辑')
+      }
       this.printDataCopy = JSON.parse(JSON.stringify(this.printData))
     },
     initData() {
