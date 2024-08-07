@@ -10,6 +10,20 @@
       "className": "IPrintAction",
       "comType": "common",
       "comLangue": "vue"
+    },
+    {
+      "classId": "idm.componet.info.igoodInfo",
+      "comName": "商品信息",
+      "className": "IGoodInfo",
+      "comType": "common",
+      "comLangue": "vue"
+    },
+    {
+      "classId": "idm.componet.info.infoflow",
+      "comName": "信息流程",
+      "className": "InfoFlow",
+      "comType": "common",
+      "comLangue": "vue"
     }
   ]
 }

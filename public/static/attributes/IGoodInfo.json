@@ -1,0 +1,25 @@
+{
+  "classId": "idm.componet.info.igoodInfo",
+  "comName": "商品信息",
+  "className": "IGoodInfo",
+  "comType": "common",
+  "comLangue": "vue",
+  "compositeAttr": [
+      {
+          "type": "input",
+          "layoutType": "inline",
+          "text": "唯一标识",
+          "bindKey": "ctrlId",
+          "disabled": true,
+          "default": "@[packageid]",
+          "desc": ""
+      },
+      {
+          "type": "group",
+          "text": "内层样式",
+          "desc": "点击？查看样式设置用法指南",
+          "helpUrl": "",
+          "children": []
+      }
+  ]
+}

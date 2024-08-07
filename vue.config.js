@@ -71,7 +71,8 @@ module.exports = {
             "./lib/axios.min.js",
             "./lib/qs.js",
             "./lib/lodash.min.js",
-            "./lib/idm.core.js"
+            "./lib/idm.core.js",
+            "./lib/jsplumb.js",
         ],
         includeCss:[
           "./lib/idm.base.css"
