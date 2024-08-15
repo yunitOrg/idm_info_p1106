@@ -204,7 +204,9 @@ export default {
     showContentMenu(event, columnitem, moduleitem, moduleIndex) {
       if (!this.isEdit) return
       event.preventDefault()
-      this.menuObj.x = event.offsetX
+      let w = this.$refs.iprintaction.offsetLeft
+      // this.menuObj.x = event.offsetX
+      this.menuObj.x = event.pageX - w - 15
       this.menuObj.y = event.pageY - event.offsetY - 70
       this.menuObj.show = true
       this.oprateObj.columnitem = columnitem
