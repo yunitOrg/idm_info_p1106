@@ -190,7 +190,11 @@ export default {
      * @Desc 展开折叠栏目,展开折叠模块
      */
     handleColumnName(item) {
-      item.isShow = !item.isShow
+      item.isShow = !item.isShow;
+      this.handleRefresh();
+    },
+    handleRefresh() {
+      this.$forceUpdate();
     },
     /**
      * @Desc 移动模块
@@ -254,6 +258,7 @@ export default {
             onOk() {
               that.oprateObj.columnitem.articles.splice(that.oprateObj.moduleIndex, 1);
               that.PrintSave()
+              that.handleRefresh()
               try{
                 top.removeContentFile(that.oprateObj.moduleitem)
               } catch(e) {
