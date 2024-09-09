@@ -7,6 +7,7 @@ export default {
         width: "60%",
         height: "100%",
         numRight: '10px',
+        addPart: true,
         numTop: '33px',
         dataSourceType: 'datasource',
         numStyle: {

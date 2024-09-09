@@ -112,6 +112,7 @@
                     class="column-p-unit forbid"
                     v-model="subitem.reportDeptText"
                     inputWidth="200px"
+                    :addBor="propData.addPart"
                     :disabled="!isEdit"
                     :state="subitem.editState"
                     @edit="(e) => handleEdit(e, subitem)"

@@ -15,6 +15,22 @@
             "desc": ""
         },
         {
+          "type": "group",
+          "text": "内层样式",
+          "desc": "点击？查看样式设置用法指南",
+          "helpUrl": "",
+          "children": [
+            {
+              "type": "switch",
+              "layoutType": "inline",
+              "text": "添加括号",
+              "desc": "部门添加括号",
+              "bindKey": "addPart",
+              "default": true
+            }
+          ]
+        },
+        {
             "type": "group",
             "text": "内层样式",
             "desc": "点击？查看样式设置用法指南",

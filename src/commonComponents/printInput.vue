@@ -1,6 +1,6 @@
 <template>
   <div class="print">
-    <span v-if="state" @dblclick="handleEdit">{{ value }}</span>
+    <span v-if="state" @dblclick="handleEdit">{{ addBor ? `(${value})` : value }}</span>
     <a-input
       v-else
       ref="printinput"
@@ -17,6 +17,10 @@ export default {
   props: {
     value: {
       type: String
+    },
+    addBor: {
+      type: Boolean,
+      default: false
     },
     state: {
       type: Boolean,
