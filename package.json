@@ -19,7 +19,7 @@
     "vue": "^2.6.11"
   },
   "devDependencies": {
-    "@idm-modules/cli": "latest",
+    "@idm-modules/cli": "^1.1.6",
     "@idm-modules/cli-generate": "^1.0.33",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",

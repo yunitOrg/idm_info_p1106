@@ -1,0 +1,451 @@
+{
+    "classId": "idm.componet.info.IStatCard",
+    "comName": "统计卡片",
+    "className": "IStatCard",
+    "comType": "common",
+    "comLangue": "vue",
+    "compositeAttr": [
+        {
+            "type": "input",
+            "layoutType": "inline",
+            "text": "唯一标识",
+            "bindKey": "ctrlId",
+            "disabled": true,
+            "default": "@[packageid]",
+            "desc": ""
+        },
+        {
+            "type": "group",
+            "text": "基本设置",
+            "children": [
+                {
+                    "type": "switch",
+                    "layoutType": "inline",
+                    "text": "设置面板",
+                    "bindKey": "settingEnabled",
+                    "default": true,
+                    "desc": "开启自定面板"
+                },
+                {
+                    "type": "iconSelect",
+                    "layoutType": "inline",
+                    "text": "设置图标",
+                    "bindKey": "settingIcon",
+                    "default": "idm-icon-shezhi",
+                    "desc": "设置按钮的图标",
+                    "display": "@[settingEnabled=='true']"
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "数据源",
+            "desc": "设置请求数据源方式及其他信息",
+            "children": [
+                {
+                    "type": "select",
+                    "layoutType": "inline",
+                    "text": "数据来源",
+                    "bindKey": "dataSourceType",
+                    "dictionary": [
+                        {
+                            "label": "数据源",
+                            "value": "dataSource"
+                        },
+                        {
+                            "label": "自定义接口",
+                            "value": "customInterface"
+                        },
+                        {
+                            "label": "页面统一接口",
+                            "value": "pageCommonInterface"
+                        },
+                        {
+                            "label": "自定义函数",
+                            "value": "customFunction"
+                        }
+                    ],
+                    "default": ""
+                },
+                {
+                    "type": "group",
+                    "text": "自定义接口",
+                    "display": "@[dataSourceType=='customInterface']",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "接口地址",
+                            "bindKey": "customInterfaceUrl",
+                            "desc": "用于获取数据源的接口地址，请按照统一标准的返回格式返回数组格式的数据，格式如下：{\"code\":\"200\",\"data\":[{...},...],...}"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "索引参数",
+                            "bindKey": "pageIndex",
+                            "desc": "提交请求给后端的当前页数的索引参数名",
+                            "default": "pageIndex"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "页量参数",
+                            "bindKey": "pageSize",
+                            "desc": "提交请求给后端的每页大小的索引参数名",
+                            "default": "pageSize"
+                        },
+                        {
+                            "type": "radio",
+                            "layoutType": "inline",
+                            "text": "请求方式",
+                            "bindKey": "requestType",
+                            "dictionary": [
+                                {
+                                    "label": "POST",
+                                    "value": "post"
+                                },
+                                {
+                                    "label": "GET",
+                                    "value": "get"
+                                }
+                            ],
+                            "default": "get"
+                        },
+                        {
+                            "type": "select",
+                            "layoutType": "inline",
+                            "text": "请求类型",
+                            "bindKey": "requestContentType",
+                            "desc": "请求接口的数据类型，请根据后端需求进行选择",
+                            "dictionary": [
+                                {
+                                    "label": "默认",
+                                    "value": ""
+                                },
+                                {
+                                    "label": "JSON",
+                                    "value": "application/json;charset=UTF-8"
+                                },
+                                {
+                                    "label": "FormData",
+                                    "value": "multipart/form-data"
+                                }
+                            ],
+                            "default": "",
+                            "display": "@[requestType=='post']"
+                        },
+                        {
+                            "type": "actionSelect",
+                            "layoutType": "block",
+                            "text": "请求参数自定义函数",
+                            "bindKey": "requestParamFun",
+                            "desc": "请求接口时会调用这里设置的函数返回自定义的参数，返回格式为Object对象，例如：{param1:'',param2:''}",
+                            "multiple": false
+                        },
+                        {
+                            "type": "table",
+                            "text": "接收其他组件联动参数",
+                            "bindKey": "linkageParamList",
+                            "tabText": "参数[index]",
+                            "children": [
+                                {
+                                    "type": "input",
+                                    "layoutType": "inline",
+                                    "text": "表单标识",
+                                    "bindKey": "msgKey",
+                                    "default": ""
+                                },
+                                {
+                                    "type": "input",
+                                    "layoutType": "inline",
+                                    "text": "参数别名",
+                                    "bindKey": "paramKey",
+                                    "default": ""
+                                },
+                                {
+                                    "type": "actionSelect",
+                                    "layoutType": "block",
+                                    "text": "参数处理函数",
+                                    "bindKey": "paramFun",
+                                    "desc": "收到其他组件联动参数后会根据表单标识调用这里设置的函数返回自定义的参数内容，返回格式为字符串或对象，例如：{text:'',value:''}或者直接字符串",
+                                    "multiple": false
+                                }
+                            ]
+                        },
+                        {
+                            "type": "actionSelect",
+                            "layoutType": "block",
+                            "text": "返回数据处理函数",
+                            "bindKey": "responseDataFun",
+                            "desc": "针对请求接口成功后返回的数据格式处理，返回列表需要的数据格式",
+                            "multiple": false
+                        },
+                        {
+                            "type": "actionSelect",
+                            "layoutType": "block",
+                            "text": "请求错误自定义函数",
+                            "bindKey": "requestErrorFun",
+                            "desc": "请求接口失败时候会调用此处的自定义函数",
+                            "multiple": false
+                        }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "text": "页面统一接口",
+                    "desc": "结果为 {rows:数据集,total:总数}",
+                    "display": "@[dataSourceType=='pageCommonInterface']",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "结果集名",
+                            "bindKey": "dataName",
+                            "desc": "页面接口设定的结果集名称，位置为：页面设置》高级设置》页面接口",
+                            "default": "",
+                            "placeholder": "示例：resultData"
+                        },
+                        {
+                            "type": "textarea",
+                            "layoutType": "inline",
+                            "text": "显示字段",
+                            "bindKey": "dataFiled",
+                            "desc": "根据接口返回数据格式指定结果集的字段，比如结果集名为resultData且它的值为{data:{filedName:[{}]}}，则这里应该填写data.filedName",
+                            "default": "",
+                            "placeholder": "示例：data.filedName 或者 [0].data[0].filedName"
+                        },
+                        {
+                            "type": "actionSelect",
+                            "layoutType": "block",
+                            "text": "结果处理函数",
+                            "bindKey": "dataFunc",
+                            "desc": "获取数据后会调用此方法，参数为 {data:结果集,value:字段值}",
+                            "multiple": false
+                        }
+                    ]
+                },
+                {
+                    "display": "@[dataSourceType=='dataSource']",
+                    "type": "dataSourceSelect",
+                    "text": "数据源",
+                    "bindKey": "dataSource"
+                },
+                {
+                    "type": "actionSelect",
+                    "layoutType": "block",
+                    "text": "自定义函数",
+                    "bindKey": "customFunction",
+                    "desc": "获取数据源的时候会调用此方法，返回数据格式如下：{total:0,rows:[{}]}",
+                    "display": "@[dataSourceType=='customFunction']",
+                    "multiple": false
+                },
+                {
+                    "type": "actionSelect",
+                    "layoutType": "block",
+                    "text": "请求参数自定义函数",
+                    "bindKey": "customParams",
+                    "desc": "获取数据源的时候会携带函数返回的对象，返回数据格式如下：{key:value}",
+                    "multiple": false
+                },
+                {
+                    "type": "group",
+                    "text": "字段设置",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "标题字段",
+                            "bindKey": "nameField",
+                            "default": "name"
+                        },
+                        {
+                            "type": "actionSelect",
+                            "layoutType": "block",
+                            "text": "自定义标题",
+                            "bindKey": "nameFunc",
+                            "desc": "参数：{record:记录数据}",
+                            "multiple": false
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "数字字段",
+                            "bindKey": "countField",
+                            "default": "count"
+                        },
+                        {
+                            "type": "actionSelect",
+                            "layoutType": "block",
+                            "text": "自定义数字",
+                            "bindKey": "countFunc",
+                            "desc": "参数：{record:记录数据}",
+                            "multiple": false
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "图标字段",
+                            "bindKey": "iconField",
+                            "default": "icon"
+                        },
+                        {
+                            "type": "actionSelect",
+                            "layoutType": "block",
+                            "text": "自定义图标",
+                            "bindKey": "iconFunc",
+                            "desc": "参数：{record:记录数据}",
+                            "multiple": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "外层样式",
+            "desc": "点击？查看样式设置用法指南",
+            "helpUrl": "",
+            "children": [
+                {
+                    "type": "inlineGroup",
+                    "text": "宽高",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "宽",
+                            "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
+                            "bindKey": "width",
+                            "width": "60px",
+                            "default": ""
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "高",
+                            "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
+                            "bindKey": "height",
+                            "width": "60px",
+                            "default": ""
+                        }
+                    ]
+                },
+                {
+                    "type": "box",
+                    "layoutType": "block",
+                    "text": "内外边距",
+                    "bindKey": "ulbox"
+                },
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "背景色",
+                    "bindKey": "bgColor",
+                    "placeholder": "请选择颜色",
+                    "default": {
+                        "hex": "",
+                        "hex8": ""
+                    }
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "容器阴影",
+                    "bindKey": "boxShadow",
+                    "default": ""
+                },
+                {
+                    "type": "border",
+                    "layoutType": "block",
+                    "text": "边框",
+                    "bindKey": "boxborder"
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "卡片样式",
+            "desc": "点击？查看样式设置用法指南",
+            "helpUrl": "",
+            "children": [
+                {
+                    "type": "inlineGroup",
+                    "text": "宽高",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "宽",
+                            "desc": "填写auto则为自适应，或者使用px、%、vw等单位，比如100%、100px、100vw等等",
+                            "bindKey": "cardWidth",
+                            "width": "",
+                            "default": ""
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "block",
+                            "text": "高",
+                            "desc": "填写auto则为自适应，或者使用px、%、vh等单位，比如100%、100px、100vh等等",
+                            "bindKey": "cardHeight",
+                            "width": "",
+                            "default": ""
+                        }
+                    ]
+                },
+                {
+                    "type": "box",
+                    "layoutType": "block",
+                    "text": "内外边距",
+                    "bindKey": "cardUlbox"
+                },
+                {
+                    "type": "colorPicker",
+                    "layoutType": "inline",
+                    "text": "背景色",
+                    "bindKey": "cardBgColor",
+                    "placeholder": "请选择颜色",
+                    "default": {
+                        "hex": "",
+                        "hex8": ""
+                    }
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
+                    "text": "容器阴影",
+                    "bindKey": "cardBoxShadow",
+                    "default": ""
+                },
+                {
+                    "type": "border",
+                    "layoutType": "block",
+                    "text": "边框",
+                    "bindKey": "cardBoxborder"
+                }
+            ]
+        },
+        {
+            "type": "group",
+            "text": "高级设置",
+            "children": [
+                {
+                    "type": "actionSelect",
+                    "layoutType": "block",
+                    "text": "点击事件",
+                    "bindKey": "handleClickFun",
+                    "desc": "参数：{record:记录数据}",
+                    "multiple": true
+                },
+                {
+                    "type": "actionSelect",
+                    "layoutType": "block",
+                    "text": "卡片样式",
+                    "bindKey": "styleFunc",
+                    "desc": "参数：{record:记录数据}",
+                    "multiple": false
+                }
+            ]
+        }
+    ]
+}

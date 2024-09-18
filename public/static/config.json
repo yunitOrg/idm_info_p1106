@@ -24,6 +24,13 @@
       "className": "InfoFlow",
       "comType": "common",
       "comLangue": "vue"
+    },
+    {
+      "classId": "idm.componet.info.IStatCard",
+      "comName": "统计卡片",
+      "className": "IStatCard",
+      "comType": "common",
+      "comLangue": "vue"
     }
   ]
 }
