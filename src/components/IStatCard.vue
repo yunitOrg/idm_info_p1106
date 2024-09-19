@@ -3,7 +3,7 @@
         <div class="wrap">
             <div
                 v-for="(item, itemIndex) in dataSource"
-                :key="itemIndex"
+                :key="getKey(item)"
                 @click="handleClick(item, itemIndex)"
                 :class="`item ${className.card}`"
                 :style="getStyle(item, itemIndex)"
@@ -22,28 +22,24 @@
         </a-tooltip>
         <a-drawer :visible="setting.visible" @close="handleClose" :title="propData.settingTitle">
             <div class="list-wrap">
-                <div v-for="(item, itemIndex) in setting.dataSource.checkedList" :key="itemIndex">
-                    <div class="item">
-                        <img :src="getSettingIconUrl(item, itemIndex)" />
-                        <div class="title">
-                            {{ getSettingName(item, itemIndex) }}
-                        </div>
-                        <svg @click="handleDelete(item)" class="idm_button_svg_icon action-btn" aria-hidden="true">
-                            <use :xlink:href="`#idm-icon-shanchu`"></use>
-                        </svg>
+                <div v-for="(item, itemIndex) in checkedList" :key="getSettingKey(item)" class="item">
+                    <img :src="getSettingIconUrl(item, itemIndex)" />
+                    <div class="title">
+                        {{ getSettingName(item, itemIndex) }}
                     </div>
+                    <svg @click="handleDelete(item)" class="idm_button_svg_icon action-btn" aria-hidden="true">
+                        <use :xlink:href="`#idm-icon-shanchu`"></use>
+                    </svg>
                 </div>
                 <hr />
-                <div v-for="(item, itemIndex) in setting.dataSource.dataList" :key="itemIndex">
-                    <div class="item">
-                        <img :src="getSettingIconUrl(item, itemIndex)" class="icon" />
-                        <div class="title">
-                            {{ getSettingName(item, itemIndex) }}
-                        </div>
-                        <svg @click="handleAdd(item)" class="idm_button_svg_icon action-btn" aria-hidden="true">
-                            <use :xlink:href="`#idm-icon-jiahao`"></use>
-                        </svg>
+                <div v-for="(item, itemIndex) in dataList" :key="getSettingKey(item)" class="item">
+                    <img :src="getSettingIconUrl(item, itemIndex)" class="icon" />
+                    <div class="title">
+                        {{ getSettingName(item, itemIndex) }}
                     </div>
+                    <svg @click="handleAdd(item)" class="idm_button_svg_icon action-btn" aria-hidden="true">
+                        <use :xlink:href="`#idm-icon-jiahao`"></use>
+                    </svg>
                 </div>
             </div>
         </a-drawer>
@@ -83,6 +79,14 @@ export default {
                 visible: false,
                 dataSource: {}
             }
+        }
+    },
+    computed: {
+        checkedList() {
+            return this.setting.dataSource.checkedList || []
+        },
+        dataList() {
+            return this.setting.dataSource.dataList?.filter((n) => !this.setting.dataSource.checkedList?.map((m) => m.codeValue).includes(n.codeValue)) || []
         }
     },
     mounted() {
@@ -187,6 +191,9 @@ export default {
             }
             return record[this.propData.countField]
         },
+        getKey(record) {
+            return record[this.propData.keyField]
+        },
         handleClick(record, index) {
             if (availableArray(this.propData.handleClickFun)) {
                 window.IDM.invokeCustomFunctions(this.propData.handleClickFun, {
@@ -229,6 +236,9 @@ export default {
                 }).join('')
             }
             return record[this.propData.settingNameField]
+        },
+        getSettingKey(record) {
+            return record[this.propData.settingKeyField]
         },
         handleDelete(record) {
             if (availableArray(this.propData.settingDeleteFunc)) {

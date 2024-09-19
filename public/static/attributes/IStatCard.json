@@ -231,6 +231,13 @@
                         {
                             "type": "input",
                             "layoutType": "inline",
+                            "text": "标识字段",
+                            "bindKey": "keyField",
+                            "default": "id"
+                        },
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
                             "text": "标题字段",
                             "bindKey": "nameField",
                             "default": "name"
@@ -496,6 +503,13 @@
                     "type": "group",
                     "text": "字段设置",
                     "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "标识字段",
+                            "bindKey": "settingKeyField",
+                            "default": "id"
+                        },
                         {
                             "type": "input",
                             "layoutType": "inline",
