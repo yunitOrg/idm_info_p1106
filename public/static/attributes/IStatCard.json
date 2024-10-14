@@ -709,6 +709,35 @@
                     "bindKey": "handleClickFun",
                     "desc": "参数：{record:记录数据}",
                     "multiple": true
+                },
+                {
+                    "type": "table",
+                    "text": "图标映射",
+                    "bindKey": "iconMap",
+                    "tabText": "图标[index]",
+                    "children": [
+                        {
+                            "type": "input",
+                            "layoutType": "inline",
+                            "text": "键",
+                            "bindKey": "iconKey",
+                            "default": ""
+                        },
+                        {
+                            "type": "uploadImage",
+                            "layoutType": "inline",
+                            "text": "图标文件",
+                            "bindKey": "iconUrl",
+                            "default": ""
+                        },
+                        {
+                            "type": "switch",
+                            "layoutType": "inline",
+                            "text": "缺省",
+                            "bindKey": "isDefault",
+                            "default": false
+                        }
+                    ]
                 }
             ]
         }

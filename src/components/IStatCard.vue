@@ -8,7 +8,7 @@
                 :class="`item ${className.card}`"
                 :style="getStyle(item, itemIndex)"
             >
-                <img v-if="getIconUrl(item, itemIndex)" :src="getIconUrl(item, itemIndex)" class="icon" />
+                <img v-if="getIconUrl(item, itemIndex)" :src="getIconUrl(item, itemIndex) | assetUrl" class="icon" />
                 <div class="info">
                     <div class="name">{{ getName(item, itemIndex) }}</div>
                     <div class="count">{{ getCount(item, itemIndex) }}</div>
@@ -23,7 +23,7 @@
         <a-drawer :visible="setting.visible" @close="handleClose" :title="propData.settingTitle">
             <div class="list-wrap">
                 <div v-for="(item, itemIndex) in checkedList" :key="getSettingKey(item)" class="item">
-                    <img :src="getSettingIconUrl(item, itemIndex)" />
+                    <img :src="getSettingIconUrl(item, itemIndex) | assetUrl" />
                     <div class="title">
                         {{ getSettingName(item, itemIndex) }}
                     </div>
@@ -33,7 +33,7 @@
                 </div>
                 <hr />
                 <div v-for="(item, itemIndex) in dataList" :key="getSettingKey(item)" class="item">
-                    <img :src="getSettingIconUrl(item, itemIndex)" class="icon" />
+                    <img :src="getSettingIconUrl(item, itemIndex) | assetUrl" class="icon" />
                     <div class="title">
                         {{ getSettingName(item, itemIndex) }}
                     </div>
@@ -53,7 +53,8 @@ export default {
         bindProp({
             iconField: 'icon',
             nameField: 'name',
-            countField: 'count'
+            countField: 'count',
+            iconMap: []
         }),
         bindStyle({
             root() {
@@ -79,6 +80,11 @@ export default {
                 visible: false,
                 dataSource: {}
             }
+        }
+    },
+    filters:{
+        assetUrl(value){
+            return window.IDM.url.getWebPath(value)
         }
     },
     computed: {
@@ -165,6 +171,14 @@ export default {
                 })
         },
         getIconUrl(record, index) {
+            if (availableArray(this.propData.iconMap)) {
+                if (this.propData.iconMap.some((n) => n.iconKey == record[this.propData.iconField])) {
+                    return this.propData.iconMap.find((n) => n.iconKey == record[this.propData.iconField]).iconUrl
+                }
+                if (this.propData.iconMap.some((n) => n.isDefault == true)) {
+                    return this.propData.iconMap.find((n) => n.isDefault == true).iconUrl
+                }
+            }
             if (availableArray(this.propData.iconFunc)) {
                 return window.IDM.invokeCustomFunctions(this.propData.iconFunc, {
                     record,
@@ -220,6 +234,14 @@ export default {
             this.setting.visible = false
         },
         getSettingIconUrl(record, index) {
+            if (availableArray(this.propData.iconMap)) {
+                if (this.propData.iconMap.some((n) => n.iconKey == record[this.propData.settingIconField])) {
+                    return this.propData.iconMap.find((n) => n.iconKey == record[this.propData.settingIconField]).iconUrl
+                }
+                if (this.propData.iconMap.some((n) => n.isDefault == true)) {
+                    return this.propData.iconMap.find((n) => n.isDefault == true).iconUrl
+                }
+            }
             if (availableArray(this.propData.settingIconFunc)) {
                 return window.IDM.invokeCustomFunctions(this.propData.settingIconFunc, {
                     record,
