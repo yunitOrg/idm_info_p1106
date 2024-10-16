@@ -270,17 +270,20 @@ export default {
     this.windowMountAttribute()
     this.isEditFunc()
     this.init()
-    let {period, num} = this.handleGetYearyQi()
-    if (period) {
-      period = period.map(item => ({value: item, label: `${item}年`}))
-    }
-    if (num) {
-      num = num.map(item => ({value: item, label: item}))
-    }
-    this.selectOption = period
-    this.termOption = num
+    this.handleSetYear()
   },
   methods: {
+    handleSetYear() {
+      let {period, num} = this.handleGetYearyQi()
+      if (period) {
+        period = period.map(item => ({value: item, label: `${item}年`}))
+      }
+      if (num) {
+        num = num.map(item => ({value: item, label: item}))
+      }
+      this.selectOption = period
+      this.termOption = num
+    },
     // 是否可编辑
     isEditFunc() {
       if (this.propData.handleIsEditFunc && this.propData.handleIsEditFunc.length > 0) {

@@ -147,7 +147,9 @@ export default {
       setTimeout(() => {
         this.loading = false
       }, 200);
+      console.log(obj, "IPrintAction接收数据")
       this.setData()
+      this.handleSetYear()
     },
     /**
      * @Desc 展开收缩 栏目和模块
