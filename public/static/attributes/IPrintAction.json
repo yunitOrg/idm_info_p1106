@@ -39,6 +39,14 @@
                 {
                     "type": "input",
                     "layoutType": "inline",
+                    "text": "编辑标题宽度",
+                    "desc": "设置可以编辑标题的时候，编辑标题的宽度",
+                    "bindKey": "editTitleWidth",
+                    "default": "300px"
+                },
+                {
+                    "type": "input",
+                    "layoutType": "inline",
                     "text": "条数X",
                     "desc": "总条数定位: right",
                     "bindKey": "numRight",
@@ -367,6 +375,14 @@
                     "text": "查看原文",
                     "bindKey": "handleSeeArticle",
                     "desc": "查看原文回调, 参数：{_this: this, item: item}",
+                    "multiple": false
+                },
+                {
+                    "type": "actionSelect",
+                    "layoutType": "block",
+                    "text": "是否编辑标题",
+                    "bindKey": "handleIsEditTitle",
+                    "desc": "是否可以编辑标题, 参数：{_this: this}",
                     "multiple": false
                 },
                 {

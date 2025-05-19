@@ -14,7 +14,8 @@
         :style="{ 'right': propData.numRight, 'top': propData.numTop }"
       >共<span>{{ numAll }}</span>条信息</div>
       <a-spin class="icloud-listright" :spinning="loading">
-      <div class="print-name textcenter">{{ printData.journalNameText }}</div>
+      <a-input v-if="isEditTitle" class="textcenter" :style="{width: propData.editTitleWidth}" v-model="printData.journalNameText"></a-input>
+      <div v-else class="print-name textcenter">{{ printData.journalNameText }}</div>
       <div class="print-term textcenter">
         <span class="print-rint">{{ printData.unit }}</span>
         <div class="print-year">
@@ -263,6 +264,16 @@ export default {
     hideimg() {
       let defaultimg = require('../assets/hideBox.png')
       return IDM.url.getModuleAssetsWebPath(defaultimg, this.moduleObject)
+    },
+    isEditTitle() {
+      if (this.propData && this.propData.handleIsEditTitle && this.propData.handleIsEditTitle.length > 0) {
+        let name = this.propData.handleIsEditTitle[0].name
+        return window[name] && window[name].call(this, {
+          _this: this
+        });
+      } else {
+        return false
+      }
     }
   },
   mounted() {
@@ -286,7 +297,7 @@ export default {
     },
     // 是否可编辑
     isEditFunc() {
-      if (this.propData.handleIsEditFunc && this.propData.handleIsEditFunc.length > 0) {
+      if (this.propData && this.propData.handleIsEditFunc && this.propData.handleIsEditFunc.length > 0) {
         let name = this.propData.handleIsEditFunc[0].name
         this.isEdit = window[name] && window[name].call(this, {
           _this: this
