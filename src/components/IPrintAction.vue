@@ -38,7 +38,11 @@
           ></PrintSelect>
           期
         </div>
-        <span class="print-rint">{{ handleFormatYear(printData.year) }}</span>
+        <span class="print-rint">
+          <a-config-provider :locale="locale">
+              <a-date-picker v-model="printData.year" valueFormat="YYYY-MM-DD" />
+          </a-config-provider>
+        </span>
       </div>
       <!--栏目-->
       <div class="column-li" v-for="(item, index) in printData.columns" :key="index">
@@ -178,6 +182,7 @@
 </template>
 
 <script>
+import locale from 'ant-design-vue/es/locale/zh_CN'
 import { getMockPrintAction } from '../utils/mock'
 import IPrintAction from '../mixins/IPrintAction'
 import Dialog from '../commonComponents/dialog.vue'
@@ -195,6 +200,7 @@ export default {
   mixins: [IPrintAction],
   data () {
     return {
+      locale,
       selectOption: [],
       termOption: [],
       editSelect: false,
