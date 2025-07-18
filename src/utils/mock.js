@@ -89,3 +89,25 @@ export function getMockPrintAction() {
         "year": "2024-04-19"
     }
 }
+export function getMockColumnSort() {
+    return [
+        {
+            "journalColText": "国内要闻",
+            "pubId": "250113172206ig8dG90mJ0HkAu5sPvk",
+            "colOrder": "1",
+            "journalCol": "240923165333r2mLQqPCK2EnPcNkcwp"
+        }, 
+        {
+            "journalColText": "区内热点",
+            "pubId": "250113172206ig8dG90mJ0HkAu5sPvk",
+            "colOrder": "2",
+            "journalCol": "240923165341IVPcaV66UpuO0iopm0L"
+        }, 
+        {
+            "journalColText": "基层动态",
+            "pubId": "250113172206ig8dG90mJ0HkAu5sPvk",
+            "colOrder": "3",
+            "journalCol": "240923165349cisPqrmkojJ3jTwIHOm"
+        }
+    ]
+}

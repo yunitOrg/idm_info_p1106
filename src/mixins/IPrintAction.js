@@ -193,6 +193,9 @@ export default {
      * @Desc 展开折叠栏目,展开折叠模块
      */
     handleColumnName(item) {
+      if(this.isEdit) {
+        return
+      }
       item.isShow = !item.isShow;
       this.handleRefresh();
     },
@@ -260,6 +263,7 @@ export default {
             okText: '确定',
             onOk() {
               that.oprateObj.columnitem.articles.splice(that.oprateObj.moduleIndex, 1);
+              that.updateAllNum()
               that.PrintSave()
               that.handleRefresh()
               try{
@@ -310,6 +314,7 @@ export default {
         okText: '确定',
         onOk() {
           that.printData.columns.splice(index, 1)
+          that.updateAllNum()
           that.PrintSave()
         },
         onCancel() {

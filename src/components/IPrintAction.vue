@@ -155,7 +155,7 @@
       width="400px"
     >
     <div class="printContent">
-      <div class="printtitle">{{ printData.name }}第{{ printData.term }}期</div>
+      <div class="printtitle">{{ printData?.name }}第{{ printData?.term }}期</div>
       <template v-if="!isEdit">
         <div class="printli" v-for="(item, index) in printDataCopy.columns" :key="index">
           <span>{{ item.columnName }}</span>
@@ -252,17 +252,18 @@ export default {
           svg: true,
           svgname: 'move'
         }
-      ]
+      ],
+      numAll:0
     }
   },
   computed: {
-    numAll() {
-      let num = 0;
-      this.printData.columns?.forEach(item => {
-        num += item?.articles?item?.articles.length:0
-      })
-      return num
-    },
+    // numAll() {
+    //   let num = 0;
+    //   this.printData.columns?.forEach(item => {
+    //     num += item?.articles?item?.articles.length:0
+    //   })
+    //   return num
+    // },
     showimg() {
       let defaultimg = require('../assets/showBox.png')
       return IDM.url.getModuleAssetsWebPath(defaultimg, this.moduleObject)
@@ -290,6 +291,13 @@ export default {
     this.handleSetYear()
   },
   methods: {
+    updateAllNum(){
+      console.log("更新num",this.printData)
+      this.numAll = 0;
+      this.printData.columns?.forEach(item => {
+        this.numAll += item?.articles?item?.articles.length:0
+      })
+    },
     handleSetYear() {
       let {period, num} = this.handleGetYearyQi()
       if (period) {
@@ -424,6 +432,7 @@ export default {
         console.log(e,'增加逻辑')
       }
       this.printDataCopy = JSON.parse(JSON.stringify(this.printData))
+      this.updateAllNum()
     },
     initData() {
       if (this.moduleObject.env !== 'production') {

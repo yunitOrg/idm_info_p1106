@@ -12,13 +12,6 @@
       "comLangue": "vue"
     },
     {
-      "classId": "idm.componet.info.igoodInfo",
-      "comName": "商品信息",
-      "className": "IGoodInfo",
-      "comType": "common",
-      "comLangue": "vue"
-    },
-    {
       "classId": "idm.componet.info.infoflow",
       "comName": "信息流程",
       "className": "InfoFlow",
@@ -29,6 +22,13 @@
       "classId": "idm.componet.info.IStatCard",
       "comName": "统计卡片",
       "className": "IStatCard",
+      "comType": "common",
+      "comLangue": "vue"
+    },
+    {
+      "classId": "idm.componet.info.icolumnsort",
+      "comName": "栏目排序",
+      "className": "IColumnSort",
       "comType": "common",
       "comLangue": "vue"
     }

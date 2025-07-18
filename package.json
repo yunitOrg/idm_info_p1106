@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@idm-modules/core": "^1.0.72",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^1.0.2",
     "ant-design-vue": "^1.7.8",
     "core-js": "^3.6.5",
     "sass-loader": "^8.0.2",
