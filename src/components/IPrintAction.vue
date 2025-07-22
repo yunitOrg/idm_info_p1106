@@ -111,6 +111,8 @@
                     v-model="subitem.content"
                     :state="subitem.editState"
                     :disabled="!isEdit"
+                    :editorKey="index + '-' + subindex + '-' + subitem.editState"
+                    :moduleObject="moduleObject"
                     @edit="(e) => handleEdit(e, subitem)"
                   ></PrintTextarea>
                   <PrintInput
