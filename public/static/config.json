@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lasttime": "2024-04-117 09:38:08",
+  "lasttime": "2025-08-06 14:58:06",
   "author": "申龙",
   "className": "info",
   "module": [
@@ -29,6 +29,13 @@
       "classId": "idm.componet.info.icolumnsort",
       "comName": "栏目排序",
       "className": "IColumnSort",
+      "comType": "common",
+      "comLangue": "vue"
+    },
+    {
+      "classId": "idm.component.info.iprintactioneditor",
+      "comName": "刊物制作编辑器",
+      "className": "IPrintActionEditor",
       "comType": "common",
       "comLangue": "vue"
     }

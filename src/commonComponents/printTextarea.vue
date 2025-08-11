@@ -13,7 +13,7 @@
       :rows="6"
     /> -->
     <div class="editor-container" style="border: 1px solid #ccc;" v-show="!state" @blur="onBlur">
-      <div class="editor-element">
+      <div class="editor-element" :class="{'is-ai-icon': isAiIcon}">
           <editor
             :id="editorKey"
             v-model="html"
@@ -31,7 +31,7 @@
           </svg>
         </div>
       </div>
-      <div class="main-box-right" v-show="arrowDirection == 'left'" data-type="">
+      <div class="main-box-right" v-show="arrowDirection == 'left'">
         <div class="main-box-right-header just-center">
           <div class="main-box-right-header-left">以下为<span class="write-type-text">{{ getCurrentTypeField('title')
               }}</span>内容</div>
@@ -47,7 +47,7 @@
         </div>
 
         <div class="write-box">
-          <div class="write-box-content">
+          <div class="write-box-content" :style="{maxHeight: writeMaxHeight}">
             <div class="think-title">
               <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="16"
                 height="16">
@@ -209,6 +209,28 @@ export default {
       type: String,
       default: IDM.uuid()
     },
+    toolbar: {
+      type: Array,
+      default: function () {
+        return 'aiicon undo redo formatpainter clearcontent | blocks fontfamily fontselect fontsize | bold italic underline strikethrough forecolor | h1 h2 h3 | alignleft aligncenter alignright export prints bullist numlist | uploadfile savedoc makelayout print exportdoc'
+      }
+    },
+    isTextSelection:{
+      type: Boolean,
+      default: false
+    },
+    height: {
+      type: String,
+      default: '360px'
+    },
+    writeMaxHeight: {
+      type: String,
+      default: '290px'
+    },
+    propAiIcon: {
+      type: Boolean,
+      default: true
+    }
   },
   data() {
     return {
@@ -217,7 +239,8 @@ export default {
       writeContent: '',
       arrowDirection: '',
       thinkingStatus: 0, // 0: 未思考，1: 思考中，2: 思考完成
-      currentType: ''
+      currentType: '',
+      isAiIcon: false
     }
   },
   components: {
@@ -234,9 +257,9 @@ export default {
   },
   async created() {
     IDM.http.importFiles(IDM.url.getModuleAssetsWebPath(`/js/clipboard.min.js`, this.moduleObject))
-    
     await IDM.http.importFiles(IDM.url.getModuleAssetsWebPath(`/js/markdown-it.min.js`, this.moduleObject))
     mdUtils = window.markdownit({ breaks: true, html: true })
+    this.isAiIcon = this.propAiIcon && top.aiParams && top.aiParams.aiEnabled
   },
   watch: {
     html(newV) {
@@ -255,14 +278,14 @@ export default {
   methods: {
     initOptions(){
       return {
-        height: '360px',
+        height: this.height,
         entity_encoding: 'raw',
         auto_focus: true,
         menubar: false,
         toolbar_mode: "wrap",
         plugins: ["formatpainter", 'table', "fullscreen", "powerpaste"],
         statusbar: false,
-        toolbar: 'undo redo formatpainter clearcontent | blocks fontfamily fontselect fontsize | bold italic underline strikethrough forecolor | h1 h2 h3 | alignleft aligncenter alignright export prints bullist numlist | uploadfile savedoc makelayout print exportdoc fullscreen',
+        toolbar: this.toolbar,
         content_style: 'html{height: calc(100% - 2rem);}body{font-family: Microsoft Yahei; min-height: 100%},img{max-width:100%;height:auto;},.mce-content-body::-webkit-scrollbar {display: none;},.mce-content-body{-ms-overflow-style: none;}.hidden-scroll{-ms-overflow-style: none;overflow: -moz-scrollbars-none;}.hidden-scroll::-webkit-scrollbar {width: 0!important}',
         font_size_formats: '初号=44pt 小初=36pt 一号=26pt 小一=24pt 二号=22pt 小二=18pt 三号=16pt 小三=15pt 四号=14pt 小四=12pt 五号=10.5pt 小五=9pt 六号=7.5pt 小六=6.5pt 七号=5.5pt 八号=5pt 5pt 5.5pt 6.5px 7.5pt 8pt 9pt 10pt 10.5pt 11pt 12pt 14pt 16pt 18pt 20pt 22pt 26pt 28pt 36pt 48pt 56pt 72pt',
         font_family_formats: '微软雅黑=Microsoft Yahei;苹方=PingFangSC-Regular;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei;楷体=KaiTi;方正小标宋=FZXBSJW-GB1-0,方正小标宋,sans-serif;Andale Mono=andale mono,monospace;Arial=arial,helvetica,sans-serif;Arial Black=arial black,sans-serif;Book Antiqua=book antiqua,palatino,serif;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier,monospace;Georgia=georgia,palatino,serif;Helvetica=helvetica,arial,sans-serif;Impact=impact,sans-serif;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco,monospace;Times New Roman=times new roman,times,serif;Trebuchet MS=trebuchet ms,geneva,sans-serif;Verdana=verdana,geneva,sans-serif;Webdings=webdings;Wingdings=wingdings,zapf dingbats',
@@ -295,16 +318,42 @@ export default {
           text: `缩写`,
           onAction: it => this.handleSelectToolbar("abbreviation")
         })
-        editor.ui.registry.addContextToolbar("textselection", {
-          predicate: node => {
-            return !editor.selection.isCollapsed() && !['TABLE', 'TBODY', 'TR', 'BR', 'TD', 'IMG'].includes(node.nodeName)
-          },
-          items: "continution | polish | extend | abbreviation",
-          position: "selection",
-          scope: "node",
-        })
+        if(this.isAiIcon) {
+          editor.ui.registry.addButton("aiicon", {
+            text: ``,
+            icon: "aiicon",
+            onAction: it => {
+              // editor.execCommand("mceInsertContent", false, '<img src="your-image-url" alt="图片描述" />')
+              this.openAiDialog()
+            },
+          })
+        }
+        if(this.isTextSelection) {
+          editor.ui.registry.addContextToolbar("textselection", {
+            predicate: node => {
+              return !editor.selection.isCollapsed() && !['TABLE', 'TBODY', 'TR', 'BR', 'TD', 'IMG'].includes(node.nodeName)
+            },
+            items: "continution | polish | extend | abbreviation",
+            position: "selection",
+            scope: "node",
+          })
+        }
         },
       }
+    },
+    openAiDialog() {
+      let _this = this
+      top._printContent = _this.html
+      top.layer.open({
+        title: '智能写作',
+        area: ['80vw', '735px'],
+        type: 2,
+        content: IDM.url.getWebPath('/p1000/idm/index.html#/preview/250811102118Xjl4uIsYIJtCo133A4A'),
+        end:function() {
+          _this.html = top._printContent
+          top._printContentCB && top._printContentCB(top._printContent)
+        }
+      });
     },
     getCurrentTypeField(key) {
       const item = btnList.find(item => item.key === this.currentType)
@@ -423,6 +472,19 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.is-ai-icon .tox-toolbar__group:first-child .tox-tbtn:first-child {
+  .tox-tbtn__icon-wrap {
+    background-image: url("../assets/ai.png");
+    background-size: 70% 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  svg {
+    opacity: 0;
+  }
+}
+</style>
 <style lang="scss" scoped>
 .printTextarea {
   border: 1px solid #d9d9d9;
@@ -447,6 +509,7 @@ export default {
 .editor-element {
   flex: 1;
 }
+
 .arrow-icon-container {
   position: absolute;
   top: calc(50% - 35px);
