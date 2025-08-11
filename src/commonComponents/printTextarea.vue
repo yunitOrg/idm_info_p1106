@@ -381,9 +381,6 @@ export default {
       const selectContent = this.editor.selection.getContent({format: 'text'})
       switch (type) {
         case 'insert':
-          if(selectContent.length === 0) {
-            return top.layer.msg('请在左侧的编辑框中选择需要替换的段落！', {icon: 2})
-          }
           this.editor.selection.setContent(this.editor.selection.getContent() + this.writeHtmlContent)
           break;
         case 'replace':
