@@ -382,12 +382,14 @@ export default {
       switch (type) {
         case 'insert':
           this.editor.selection.setContent(this.editor.selection.getContent() + this.writeHtmlContent)
+          this.html = this.editor.getContent()
           break;
         case 'replace':
           if(selectContent.length === 0) {
             return top.layer.msg('请在左侧的编辑框中选择需要替换的段落！', {icon: 2})
           }
           this.editor.selection.setContent(this.writeHtmlContent)
+          this.html = this.editor.getContent()
           break;
         case 'copy':
           this.doCopy(this.writeHtmlContent, evt)
