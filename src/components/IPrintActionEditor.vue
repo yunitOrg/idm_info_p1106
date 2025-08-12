@@ -1,6 +1,6 @@
 <template>
   <div idm-ctrl="idm_module" :id="moduleObject.id" :idm-ctrl-id="moduleObject.id">
-    <PrintTextarea :state="false" ref="printTextarea" writeMaxHeight="621px" :moduleObject="moduleObject" height="691px"
+    <PrintTextarea :propData="propData" :state="false" ref="printTextarea" writeMaxHeight="621px" :moduleObject="moduleObject" height="691px"
       toolbar="undo redo formatpainter clearcontent | blocks fontfamily fontselect fontsize | bold italic underline strikethrough forecolor | h1 h2 h3 | alignleft aligncenter alignright export prints bullist numlist | uploadfile savedoc makelayout print exportdoc"
       v-model="html" :isTextSelection="true" :propAiIcon="false"></PrintTextarea>
   </div>

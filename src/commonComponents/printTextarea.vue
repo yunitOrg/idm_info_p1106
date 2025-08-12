@@ -124,34 +124,26 @@ const btnList = [
   {
     title: '续写',
     key: 'continution',
-    config: {
-      appId: 'cade0835c5a54f8682b6d1b170951407',
-      secretKey: 'ff4e01f92151472a8a7b29030e679b7a'
-    }
+    appId: 'cade0835c5a54f8682b6d1b170951407',
+    secretKey: 'ff4e01f92151472a8a7b29030e679b7a'
   },
   {
     title: '润色',
     key: 'polish',
-    config: {
-      appId: '006091de0a0b490fb936a7b785dbb2cc',
-      secretKey: 'cc12fb3e0833428b8177f1c417b4cc17'
-    }
+    appId: '006091de0a0b490fb936a7b785dbb2cc',
+    secretKey: 'cc12fb3e0833428b8177f1c417b4cc17'
   },
   {
     title: '扩写',
     key: 'extend',
-    config: {
-      appId: '21ba44712f40462c986eb601be13102e',
-      secretKey: '3cae3e6febd3483ebf4e919a63d3aa04'
-    }
+    appId: '21ba44712f40462c986eb601be13102e',
+    secretKey: '3cae3e6febd3483ebf4e919a63d3aa04'
   },
   {
     title: '缩写',
     key: 'abbreviation',
-    config: {
-      appId: '1783eb755e064bb68d126b6eeef581b3',
-      secretKey: '6d2cd663f2f842b1bb92f4b171cba0b9'
-    }
+    appId: '1783eb755e064bb68d126b6eeef581b3',
+    secretKey: '6d2cd663f2f842b1bb92f4b171cba0b9'
   }
 ]
 
@@ -230,6 +222,14 @@ export default {
     propAiIcon: {
       type: Boolean,
       default: true
+    },
+    propData: {
+      type: Object,
+      default: function() {
+        return {
+          btnList: []
+        }
+      }
     }
   },
   data() {
@@ -356,7 +356,7 @@ export default {
       });
     },
     getCurrentTypeField(key) {
-      const item = btnList.find(item => item.key === this.currentType)
+      const item = this.propData.btnList.find(item => item.key === this.currentType)
       return item ? item[key] : ''
     },
     doCopy(content, event) {
@@ -418,7 +418,10 @@ export default {
       let eventSource = null
       IDM.http.post('/ctrl/AIRich/saveContent', {
         content: content,
-        config: JSON.stringify(this.getCurrentTypeField('config'))
+        config: JSON.stringify({
+          appId: this.getCurrentTypeField('appId'),
+          secretKey: this.getCurrentTypeField('secretKey')
+        })
       }).done(res => {
         if (res.code == 200) {
           if (eventSource) {
