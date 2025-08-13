@@ -351,6 +351,8 @@ export default {
         content: IDM.url.getWebPath('/p1000/idm/index.html#/preview/250811102118Xjl4uIsYIJtCo133A4A'),
         end:function() {
           _this.html = top._printContent
+          this.editor.setContent(_this.html)
+          this.editor.undoManager.add()
           top._printContentCB && top._printContentCB(top._printContent)
         }
       });
@@ -382,6 +384,7 @@ export default {
       switch (type) {
         case 'insert':
           this.editor.selection.setContent(this.editor.selection.getContent() + this.writeHtmlContent)
+          this.editor.undoManager.add()
           this.html = this.editor.getContent()
           break;
         case 'replace':
@@ -389,6 +392,7 @@ export default {
             return top.layer.msg('请在左侧的编辑框中选择需要替换的段落！', {icon: 2})
           }
           this.editor.selection.setContent(this.writeHtmlContent)
+          this.editor.undoManager.add()
           this.html = this.editor.getContent()
           break;
         case 'copy':
