@@ -478,7 +478,7 @@ export default {
 .is-ai-icon .tox-toolbar__group:first-child .tox-tbtn:first-child {
   .tox-tbtn__icon-wrap {
     background-image: url("../assets/ai.png");
-    background-size: 70% 70%;
+    background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
   }
